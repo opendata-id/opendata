@@ -1,0 +1,333 @@
+# JDIH API Configuration
+# Last updated: 2026-01-24
+#
+# Status codes:
+#   working: API confirmed working with UMK data
+#   partial: API works but limited UMK data
+#   scrape: No API, requires HTML scraping
+#   unknown: Not yet tested
+
+provinces:
+  # === WORKING APIs ===
+
+  jatim:
+    name: "Jawa Timur"
+    status: working
+    jdih_url: "https://jdih.jatimprov.go.id"
+    api:
+      base_url: "https://api.jdih.jatimprov.go.id/api/v2/topics"
+      method: GET
+      params:
+        webmaster_section_id: 10
+        per_page: 100
+        page: 1
+        sort_by: date
+        sort_order: desc
+      response:
+        data_path: "data.data"
+        total_path: "data.pagination.total"
+        title_field: "title"
+        date_field: "date"
+        pdf_field: "fields[?title=Lampiran].details"
+        id_field: "id"
+    notes: "Separate API subdomain. section_id 10 = Produk Hukum"
+
+  bengkulu:
+    name: "Bengkulu"
+    status: working
+    jdih_url: "https://jdih.bengkuluprov.go.id"
+    api:
+      base_url: "https://jdih.bengkuluprov.go.id/api/documents"
+      method: GET
+      params:
+        # Optional filters:
+        # jenis: "Keputusan Gubernur"
+        # tahun: 2024
+        # search: "upah minimum"
+      response:
+        data_path: "[]"  # Root is array
+        title_field: "judul"
+        date_field: "tanggal_pengundangan"
+        pdf_field: "urlDownload"
+        id_field: "idData"
+        year_field: "tahun_pengundangan"
+        type_field: "jenis"
+    search_api:
+      base_url: "https://jdih.bengkuluprov.go.id/produk-hukum/search-recommendations"
+      params:
+        q: ""  # Search query
+    notes: "Laravel. Full document listing. Search via ?search= param or separate search-recommendations endpoint"
+
+  ntb:
+    name: "Nusa Tenggara Barat"
+    status: partial
+    jdih_url: "https://jdih.ntbprov.go.id"
+    api:
+      base_url: "https://jdih.ntbprov.go.id/api/produk-hukum"
+      method: GET
+      params:
+        per_page: 100
+        page: 1
+        # search: "upah minimum"
+        # bentuk_id: 273  # Pergub
+        # tahun: 2024
+      response:
+        data_path: "data"
+        total_path: "meta.total"
+        title_field: "judul"
+        date_field: "tgl_penetapan"
+        description_field: "deskripsi"
+        id_field: "id"
+        slug_field: "slug"
+    notes: "Laravel/Livewire. Limited historical UMK data (only 2 found)"
+
+  # === NO PUBLIC API - REQUIRES SCRAPING ===
+
+  jakarta:
+    name: "DKI Jakarta"
+    status: scrape
+    jdih_url: "https://jdih.jakarta.go.id"
+    framework: Laravel
+    scrape:
+      list_url: "https://jdih.jakarta.go.id/dokumen"
+      detail_pattern: "https://jdih.jakarta.go.id/dokumen/detail/{id}"
+    notes: "Server-side rendering. No public API found"
+
+  jateng:
+    name: "Jawa Tengah"
+    status: scrape
+    jdih_url: "https://jdih.jatengprov.go.id"
+    framework: Laravel
+    notes: "No public API found"
+
+  jabar:
+    name: "Jawa Barat"
+    status: scrape
+    jdih_url: "https://jdih.jabarprov.go.id"
+    framework: Laravel
+    cloudflare: true
+    notes: "Cloudflare challenge. May have API but blocked by WAF"
+
+  jogja:
+    name: "DI Yogyakarta"
+    status: scrape
+    jdih_url: "https://jdih.jogjaprov.go.id"
+    framework: Yii2
+    notes: "No public API found"
+
+  banten:
+    name: "Banten"
+    status: scrape
+    jdih_url: "https://jdih.bantenprov.go.id"
+    framework: Laravel
+    notes: "No public API found"
+
+  # === SUMATERA ===
+
+  aceh:
+    name: "Aceh"
+    status: scrape
+    jdih_url: "https://jdih.acehprov.go.id"
+    framework: PHP/nginx
+    notes: "No public API found"
+
+  sumut:
+    name: "Sumatera Utara"
+    status: scrape
+    jdih_url: "https://jdih.sumutprov.go.id"
+    framework: CodeIgniter
+    notes: "No public API found"
+
+  sumbar:
+    name: "Sumatera Barat"
+    status: scrape
+    jdih_url: "https://jdih-birohukum.sumbarprov.go.id"
+    framework: unknown
+    notes: "Different subdomain (jdih-birohukum). No API found"
+
+  riau:
+    name: "Riau"
+    status: scrape
+    jdih_url: "https://jdih.riau.go.id"
+    framework: Laravel
+    notes: "No public API found"
+
+  jambi:
+    name: "Jambi"
+    status: scrape
+    jdih_url: "https://jdih.jambiprov.go.id"
+    framework: PHP
+    notes: "No public API found"
+
+  sumsel:
+    name: "Sumatera Selatan"
+    status: scrape
+    jdih_url: "https://jdih.sumselprov.go.id"
+    framework: Laravel
+    notes: "No public API found"
+
+  lampung:
+    name: "Lampung"
+    status: scrape
+    jdih_url: "https://jdih.lampungprov.go.id"
+    framework: Laravel
+    notes: "Cloudflare CDN (no challenge)"
+
+  babel:
+    name: "Bangka Belitung"
+    status: scrape
+    jdih_url: "https://jdih.babelprov.go.id"
+    framework: Drupal7
+    scrape:
+      ajax_url: "https://jdih.babelprov.go.id/views/ajax"
+      method: POST
+    notes: "Drupal views/ajax endpoint returns settings only"
+
+  kepri:
+    name: "Kepulauan Riau"
+    status: scrape
+    jdih_url: "https://jdih.kepriprov.go.id"
+    framework: CodeIgniter
+    notes: "No public API found"
+
+  # === KALIMANTAN ===
+
+  kalbar:
+    name: "Kalimantan Barat"
+    status: scrape
+    jdih_url: "https://jdih.kalbarprov.go.id"
+    framework: Django
+    notes: "Django catch-all returns HTML for all API paths"
+
+  kalteng:
+    name: "Kalimantan Tengah"
+    status: scrape
+    jdih_url: "https://jdih.kalteng.go.id"
+    framework: OctoberCMS
+    notes: "No public API found"
+
+  kalsel:
+    name: "Kalimantan Selatan"
+    status: scrape
+    jdih_url: "https://jdih.kalselprov.go.id"
+    framework: PHP
+    notes: "No public API found"
+
+  kaltim:
+    name: "Kalimantan Timur"
+    status: scrape
+    jdih_url: "https://jdih.kaltimprov.go.id"
+    framework: Laravel
+    notes: "No public API found"
+
+  kaltara:
+    name: "Kalimantan Utara"
+    status: scrape
+    jdih_url: "https://jdih.kaltaraprov.go.id"
+    framework: Yii2
+    notes: "No public API found"
+
+  # === SULAWESI ===
+
+  sulut:
+    name: "Sulawesi Utara"
+    status: scrape
+    jdih_url: "https://jdih.sulutprov.go.id"
+    framework: Next.js
+    notes: "No public API found"
+
+  sulteng:
+    name: "Sulawesi Tengah"
+    status: scrape
+    jdih_url: "https://jdih.sultengprov.go.id"
+    framework: CodeIgniter
+    notes: "No public API found"
+
+  sulsel:
+    name: "Sulawesi Selatan"
+    status: scrape
+    jdih_url: "https://jdih.sulselprov.go.id"
+    framework: CodeIgniter
+    notes: "No public API found"
+
+  sultra:
+    name: "Sulawesi Tenggara"
+    status: scrape
+    jdih_url: "https://jdih.sultraprov.go.id"
+    framework: Yii2
+    notes: "No public API found"
+
+  gorontalo:
+    name: "Gorontalo"
+    status: scrape
+    jdih_url: "https://jdih.gorontaloprov.go.id"
+    framework: unknown
+    notes: "Site exists but no API found"
+
+  sulbar:
+    name: "Sulawesi Barat"
+    status: unknown
+    jdih_url: "https://jdih.sulbarprov.go.id"
+    notes: "Returns 403 Forbidden"
+
+  # === BALI & NUSA TENGGARA ===
+
+  bali:
+    name: "Bali"
+    status: scrape
+    jdih_url: "https://jdih.baliprov.go.id"
+    framework: Next.js
+    notes: "No public API found"
+
+  ntt:
+    name: "Nusa Tenggara Timur"
+    status: scrape
+    jdih_url: "https://jdih.nttprov.go.id"
+    framework: Yii2
+    http_only: true
+    notes: "HTTP only (no HTTPS). No public API found"
+
+  # === MALUKU ===
+
+  maluku:
+    name: "Maluku"
+    status: scrape
+    jdih_url: "https://jdih.malukuprov.go.id"
+    framework: CodeIgniter
+    notes: "No public API found"
+
+  malut:
+    name: "Maluku Utara"
+    status: scrape
+    jdih_url: "https://jdih.malutprov.go.id"
+    framework: Yii2
+    notes: "No public API found"
+
+  # === PAPUA ===
+
+  papua:
+    name: "Papua"
+    status: scrape
+    jdih_url: "https://jdih.papua.go.id"
+    framework: Yii2
+    notes: "No public API found"
+
+  papuabarat:
+    name: "Papua Barat"
+    status: scrape
+    jdih_url: "https://jdih.papuabaratprov.go.id"
+    framework: Yii2
+    notes: "No public API found"
+
+# UMK search keywords
+umk_keywords:
+  - "upah minimum"
+  - "umk"
+  - "ump"
+  - "umsp"
+
+# Document types for UMK
+umk_doc_types:
+  - "Keputusan Gubernur"
+  - "Peraturan Gubernur"
+  - "SK Gubernur"

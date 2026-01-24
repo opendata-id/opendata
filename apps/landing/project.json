@@ -1,0 +1,14 @@
+{
+  "name": "landing",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/landing",
+  "targets": {
+    "serve": {
+      "command": "php -S localhost:3000 -t apps/landing/public apps/landing/public/index.php",
+      "options": {
+        "cwd": "{workspaceRoot}"
+      }
+    }
+  }
+}

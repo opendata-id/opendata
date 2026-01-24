@@ -1,0 +1,274 @@
+/* ============================================
+   HOME PAGE - DATA SECTION
+   ============================================ */
+.data-section {
+  border-right: 1px solid var(--color-stone);
+  display: flex;
+  flex-direction: column;
+  animation: fadeSlideRight 0.7s ease-out 0.1s both;
+}
+
+.data-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+
+.data-cell {
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid var(--color-stone);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  transition: background 0.2s ease;
+}
+
+.data-cell:nth-child(odd) {
+  border-right: 1px solid var(--color-stone);
+}
+
+.data-cell:nth-child(3),
+.data-cell:nth-child(4) {
+  border-bottom: none;
+}
+
+.data-cell:hover {
+  background: var(--color-accent-light);
+}
+
+.data-cell .data-value {
+  opacity: 0;
+  transform: translateY(8px);
+  animation: countReveal 0.5s ease-out forwards;
+}
+
+.data-cell:nth-child(1) .data-value { animation-delay: 0.3s; }
+.data-cell:nth-child(2) .data-value { animation-delay: 0.4s; }
+.data-cell:nth-child(3) .data-value { animation-delay: 0.5s; }
+.data-cell:nth-child(4) .data-value { animation-delay: 0.6s; }
+
+/* ============================================
+   HOME PAGE - APP PORTAL
+   ============================================ */
+.portal-section {
+  display: flex;
+  flex-direction: column;
+  animation: fadeSlideLeft 0.7s ease-out 0.2s both;
+}
+
+.portal-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.app-card {
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  border-left: 1px solid var(--color-stone);
+  text-decoration: none;
+  color: inherit;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.3s ease;
+}
+
+.app-card:first-child {
+  border-left: none;
+}
+
+.app-card::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 3px;
+  background: var(--color-accent);
+  transition: width 0.3s ease;
+}
+
+.app-card:hover {
+  background: var(--color-accent-light);
+}
+
+.app-card:hover::before {
+  width: 100%;
+}
+
+.app-card.disabled {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.app-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.app-number {
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  color: var(--color-stone);
+  letter-spacing: 0.1em;
+}
+
+.app-status {
+  font-size: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  padding: 0.2rem 0.5rem;
+  border: 1px solid var(--color-stone);
+  color: var(--color-muted);
+  font-weight: 500;
+}
+
+.app-status.active {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: var(--color-paper);
+}
+
+.app-status.soon {
+  border-style: dashed;
+}
+
+.app-title {
+  font-family: var(--font-display);
+  font-size: 1.125rem;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.01em;
+  transition: color 0.2s ease;
+}
+
+.app-card:hover .app-title {
+  color: var(--color-accent);
+}
+
+.app-description {
+  font-size: 0.75rem;
+  color: var(--color-muted);
+  line-height: 1.5;
+  flex: 1;
+}
+
+.app-meta {
+  margin-top: auto;
+  padding-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.app-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  color: var(--color-muted);
+}
+
+.app-meta-icon {
+  width: 12px;
+  height: 12px;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  fill: none;
+}
+
+.app-arrow {
+  position: absolute;
+  right: 1.5rem;
+  top: 1.5rem;
+  width: 18px;
+  height: 18px;
+  opacity: 0;
+  transform: translateX(-8px);
+  transition: all 0.3s ease;
+}
+
+.app-card:hover .app-arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ============================================
+   HOME RESPONSIVE
+   ============================================ */
+@media (max-width: 900px) {
+  .data-section {
+    border-right: none;
+    border-bottom: 1px solid var(--color-stone);
+  }
+
+  .data-grid {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+  }
+
+  .data-cell {
+    padding: 1.25rem 1.5rem;
+  }
+
+  .portal-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .app-card {
+    border-left: none;
+    border-bottom: 1px solid var(--color-stone);
+  }
+
+  .app-card:last-child {
+    border-bottom: none;
+  }
+
+  .app-card::before {
+    top: 0;
+    bottom: auto;
+    width: 0;
+    height: 3px;
+  }
+
+  .app-card:hover::before {
+    width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .data-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .data-cell:nth-child(odd) {
+    border-right: none;
+  }
+
+  .data-cell {
+    border-bottom: 1px solid var(--color-stone);
+  }
+
+  .data-cell:last-child {
+    border-bottom: none;
+  }
+
+  .app-card {
+    padding: 1.25rem;
+  }
+
+  .app-title {
+    font-size: 1rem;
+  }
+
+  .app-meta {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+}

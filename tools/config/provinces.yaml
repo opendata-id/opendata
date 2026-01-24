@@ -1,0 +1,433 @@
+# Province Registry for UMK Collection
+# Contains all 34 Indonesian provinces with their source URLs and scraper configurations
+#
+# JDIH types:
+#   - elegis: Standard eLegislasi platform
+#   - jdihn: JDIH Nasional compatible
+#   - custom: Province-specific implementation
+#
+# Scraper types:
+#   - jdih: Primary JDIH portal scraper
+#   - disnaker: Disnaker website scraper
+#   - gdrive: Google Drive folder scraper
+#   - direct: Direct PDF URL download
+
+provinces:
+  # === SUMATERA ===
+  - name: Aceh
+    code: aceh
+    jdih_url: https://jdih.acehprov.go.id
+    jdih_search_path: /pencarian?q=upah+minimum+{year}
+    jdih_type: elegis
+    disnaker_url: https://disnakermobduk.acehprov.go.id
+    scraper_type: jdih
+    has_umk: true
+    kepgub_pattern: "500.15.14.1/{num}/{year}"
+    notes: "Kepgub typically announced mid-December"
+
+  - name: Sumatera Utara
+    code: sumut
+    jdih_url: https://jdih.sumutprov.go.id
+    jdih_search_path: /search?q=upah+minimum+{year}
+    jdih_type: elegis
+    disnaker_url: https://disnaker.sumutprov.go.id
+    gdrive_url: https://drive.google.com/drive/folders/1ZJdOIRCjFIXR4pAEooBKPeL_yc-Cuhau
+    scraper_type: gdrive
+    has_umk: true
+    kepgub_pattern: "188.44/{num}/KPTS/{year}"
+    notes: "Uses Google Drive for official documents"
+
+  - name: Sumatera Barat
+    code: sumbar
+    jdih_url: https://jdih.sumbarprov.go.id
+    jdih_search_path: /pencarian?kata_kunci=upah+minimum+{year}
+    jdih_type: elegis
+    disnaker_url: https://disnaker.sumbarprov.go.id
+    scraper_type: jdih
+    has_umk: true
+    kepgub_pattern: "{num}-{subnum}-{year}"
+
+  - name: Riau
+    code: riau
+    jdih_url: https://jdih.riau.go.id
+    jdih_search_path: /home/pencarian?keyword=upah+minimum+{year}
+    jdih_type: elegis
+    disnaker_url: https://disnaker.riau.go.id
+    news_url: https://mediacenter.riau.go.id
+    scraper_type: jdih
+    has_umk: true
+    kepgub_pattern: "Kpts.{num}/XII/{year}"
+
+  - name: Jambi
+    code: jambi
+    jdih_url: https://jdih.jambiprov.go.id
+    jdih_search_path: /pencarian?q=upah+minimum+{year}
+    jdih_type: elegis
+    disnaker_url: https://disnaker.jambiprov.go.id
+    scraper_type: jdih
+    has_umk: true
+    notes: "JDIH not well indexed, may need Disnaker fallback"
+
+  - name: Sumatera Selatan
+    code: sumsel
+    jdih_url: https://jdih.sumselprov.go.id
+    jdih_search_path: /pencarian?q=upah+minimum+{year}
+    jdih_type: elegis
+    disnaker_url: https://disnaker.sumselprov.go.id
+    news_url: https://kominfo.sumselprov.go.id
+    scraper_type: jdih
+    has_umk: true
+    kepgub_pattern: "{num}/KPTS/Disnakertrans/{year}"
+
+  - name: Bengkulu
+    code: bengkulu
+    jdih_url: https://jdih.bengkuluprov.go.id
+    jdih_search_path: /produk-hukum?search=upah+minimum+{year}
+    jdih_type: elegis
+    disnaker_url: https://disnaker.bengkuluprov.go.id
+    scraper_type: jdih
+    has_umk: true
+    kepgub_pattern: "K.{num}.DKKTRANS/{year}"
+
+  - name: Lampung
+    code: lampung
+    jdih_url: https://jdih.lampungprov.go.id
+    jdih_search_path: /product-hukum/provinsi?search=upah+minimum+{year}
+    jdih_type: elegis
+    disnaker_url: https://disnaker.lampungprov.go.id
+    direct_pdf_pattern: https://jdih.lampungprov.go.id/product-hukum/provinsi/{doc_id}/pdf
+    scraper_type: jdih
+    has_umk: true
+    kepgub_pattern: "G/{num}/V.08/HK/{year}"
+
+  - name: Kepulauan Bangka Belitung
+    code: babel
+    jdih_url: https://jdih.babelprov.go.id
+    jdih_search_path: /search?q=upah+minimum+{year}
+    jdih_type: elegis
+    disnaker_url: https://disnaker.babelprov.go.id
+    scraper_type: jdih
+    has_umk: true
+    kepgub_pattern: "100.3.3.1/{num}/DISNAKER/{year}"
+
+  - name: Kepulauan Riau
+    code: kepri
+    jdih_url: https://jdih.kepriprov.go.id
+    jdih_search_path: /pencarian?search=upah+minimum+{year}
+    jdih_type: elegis
+    disnaker_url: https://disnaker.kepriprov.go.id
+    news_url: https://kepriprov.go.id
+    scraper_type: jdih
+    has_umk: true
+    kepgub_pattern: "{num}/{year}"
+
+  # === JAWA ===
+  - name: DKI Jakarta
+    code: jakarta
+    jdih_url: https://jdih.jakarta.go.id
+    jdih_search_path: /dokumen?search=upah+minimum+{year}
+    jdih_type: custom
+    direct_pdf_pattern: https://jdih.jakarta.go.id/dokumen/detail/{doc_id}
+    scraper_type: jdih
+    has_umk: false
+    kepgub_pattern: "{num}/{year}"
+    notes: "Only UMP (single region, no UMK)"
+
+  - name: Jawa Barat
+    code: jabar
+    jdih_url: https://jdih.jabarprov.go.id
+    jdih_search_path: /produk-hukum?search=upah+minimum+{year}
+    jdih_type: elegis
+    disnaker_url: https://disnaker.jabarprov.go.id
+    news_url: https://jabarprov.go.id
+    scraper_type: jdih
+    has_umk: true
+    kepgub_pattern: "561.7/Kep.{num}-Kesra/{year}"
+
+  - name: Jawa Tengah
+    code: jateng
+    jdih_url: https://jdih.jatengprov.go.id
+    jdih_search_path: /produk-hukum?cari=upah+minimum+{year}
+    jdih_type: elegis
+    disnaker_url: https://disnaker.jatengprov.go.id
+    scraper_type: jdih
+    has_umk: true
+    kepgub_pattern: "100.3.3.1/{num}/{year}"
+
+  - name: DI Yogyakarta
+    code: jogja
+    jdih_url: https://jdih.jogjaprov.go.id
+    jdih_search_path: /pencarian?q=upah+minimum+{year}
+    jdih_type: elegis
+    disnaker_url: https://nakertrans.jogjaprov.go.id
+    scraper_type: jdih
+    has_umk: true
+    kepgub_pattern: "{num}/{year}"
+
+  - name: Jawa Timur
+    code: jatim
+    jdih_url: https://jdih.jatimprov.go.id
+    jdih_search_path: /produk-hukum?search=upah+minimum+{year}
+    jdih_type: elegis
+    disnaker_url: https://disnaker.jatimprov.go.id
+    scraper_type: jdih
+    has_umk: true
+    kepgub_pattern: "100.3.3.1/{num}/013/{year}"
+    notes: "Kepgub sometimes delayed, check Disnaker announcements"
+
+  # === KALIMANTAN ===
+  - name: Kalimantan Barat
+    code: kalbar
+    jdih_url: https://jdih.kalbarprov.go.id
+    jdih_search_path: /search?q=upah+minimum+{year}
+    jdih_type: elegis
+    disnaker_url: https://disnaker.kalbarprov.go.id
+    scraper_type: jdih
+    has_umk: true
+    kepgub_pattern: "{num}/NAKERTRAN/{year}"
+
+  - name: Kalimantan Tengah
+    code: kalteng
+    jdih_url: https://jdih.kalteng.go.id
+    jdih_search_path: /pencarian?kata=upah+minimum+{year}
+    jdih_type: elegis
+    disnaker_url: https://disnaker.kalteng.go.id
+    scraper_type: jdih
+    has_umk: true
+    kepgub_pattern: "188.44/{num}/{year}"
+
+  - name: Kalimantan Selatan
+    code: kalsel
+    jdih_url: https://jdih.kalselprov.go.id
+    jdih_search_path: /pencarian?q=upah+minimum+{year}
+    jdih_type: elegis
+    disnaker_url: https://disnaker.kalselprov.go.id
+    scraper_type: jdih
+    has_umk: true
+    kepgub_pattern: "100.3.3.1/{num}/KUM/{year}"
+
+  - name: Kalimantan Timur
+    code: kaltim
+    jdih_url: https://jdih.kaltimprov.go.id
+    jdih_search_path: /produk-hukum?search=upah+minimum+{year}
+    jdih_type: elegis
+    disnaker_url: https://disnaker.kaltimprov.go.id
+    scraper_type: jdih
+    has_umk: true
+    kepgub_pattern: "500.15.14.1/{num}/DTKT"
+
+  - name: Kalimantan Utara
+    code: kaltara
+    jdih_url: https://jdih.kaltaraprov.go.id
+    jdih_search_path: /search?q=upah+minimum+{year}
+    jdih_type: elegis
+    disnaker_url: https://disnaker.kaltaraprov.go.id
+    scraper_type: jdih
+    has_umk: true
+    kepgub_pattern: "100.3.3.1/{num}/{year}"
+
+  # === SULAWESI ===
+  - name: Sulawesi Utara
+    code: sulut
+    jdih_url: https://jdih.sulutprov.go.id
+    jdih_search_path: /pencarian?q=upah+minimum+{year}
+    jdih_type: elegis
+    disnaker_url: https://disnaker.sulutprov.go.id
+    scraper_type: jdih
+    has_umk: true
+    kepgub_pattern: "{num}/{year}"
+
+  - name: Sulawesi Tengah
+    code: sulteng
+    jdih_url: https://jdih.sultengprov.go.id
+    jdih_search_path: /search?q=upah+minimum+{year}
+    jdih_type: elegis
+    disnaker_url: https://disnaker.sultengprov.go.id
+    scraper_type: jdih
+    has_umk: true
+    kepgub_pattern: "500.15.14.1/{num}/{year}"
+
+  - name: Sulawesi Selatan
+    code: sulsel
+    jdih_url: https://jdih.sulselprov.go.id
+    jdih_search_path: /pencarian?q=upah+minimum+{year}
+    jdih_type: elegis
+    disnaker_url: https://disnaker.sulselprov.go.id
+    scraper_type: jdih
+    has_umk: true
+    kepgub_pattern: "{num}/XII/{year}"
+
+  - name: Sulawesi Tenggara
+    code: sultra
+    jdih_url: https://jdih.sultraprov.go.id
+    jdih_search_path: /search?q=upah+minimum+{year}
+    jdih_type: elegis
+    disnaker_url: https://disnaker.sultraprov.go.id
+    scraper_type: jdih
+    has_umk: true
+    kepgub_pattern: "110.3.3.1/{num}"
+
+  - name: Gorontalo
+    code: gorontalo
+    jdih_url: https://jdih.gorontaloprov.go.id
+    jdih_search_path: /search?q=upah+minimum+{year}
+    jdih_type: elegis
+    disnaker_url: https://disnaker.gorontaloprov.go.id
+    scraper_type: jdih
+    has_umk: true
+    kepgub_pattern: "{num}/{subnum}/XII/{year}"
+
+  - name: Sulawesi Barat
+    code: sulbar
+    jdih_url: https://jdih.sulbarprov.go.id
+    jdih_search_path: /pencarian?q=upah+minimum+{year}
+    jdih_type: elegis
+    disnaker_url: https://disnaker.sulbarprov.go.id
+    scraper_type: jdih
+    has_umk: true
+    kepgub_pattern: "{num}/{year}"
+
+  # === BALI & NUSA TENGGARA ===
+  - name: Bali
+    code: bali
+    jdih_url: https://jdih.baliprov.go.id
+    jdih_search_path: /pencarian?q=upah+minimum+{year}
+    jdih_type: elegis
+    disnaker_url: https://disnakeresdm.baliprov.go.id
+    direct_pdf_pattern: https://disnakeresdm.baliprov.go.id/wp-content/uploads/{year}/12/PENGUMUMAN-DAN-SK-UMK-UMSK-TAHUN-{next_year}.pdf
+    scraper_type: disnaker
+    has_umk: true
+    kepgub_pattern: "{num}/03-M/HK/{year}"
+    notes: "Disnaker often has direct PDF links"
+
+  - name: Nusa Tenggara Barat
+    code: ntb
+    jdih_url: https://jdih.ntbprov.go.id
+    jdih_search_path: /search?q=upah+minimum+{year}
+    jdih_type: elegis
+    disnaker_url: https://disnakertrans.ntbprov.go.id
+    scraper_type: jdih
+    has_umk: true
+    kepgub_pattern: "100.3.3.1-{num}/{year}"
+
+  - name: Nusa Tenggara Timur
+    code: ntt
+    jdih_url: https://jdih.nttprov.go.id
+    jdih_search_path: /pencarian?q=upah+minimum+{year}
+    jdih_type: elegis
+    disnaker_url: https://disnaker.nttprov.go.id
+    scraper_type: jdih
+    has_umk: true
+    notes: "JDIH indexing may be delayed"
+
+  # === MALUKU ===
+  - name: Maluku
+    code: maluku
+    jdih_url: https://jdih.malukuprov.go.id
+    jdih_search_path: /search?q=upah+minimum+{year}
+    jdih_type: elegis
+    disnaker_url: https://disnaker.malukuprov.go.id
+    scraper_type: jdih
+    has_umk: true
+    kepgub_pattern: "{num}/{year}"
+
+  - name: Maluku Utara
+    code: malut
+    jdih_url: https://jdih.malutprov.go.id
+    jdih_search_path: /search?q=upah+minimum+{year}
+    jdih_type: elegis
+    disnaker_url: https://disnaker.malutprov.go.id
+    scraper_type: jdih
+    has_umk: true
+    kepgub_pattern: "{num}/KPTS/MU/{year}"
+
+  # === PAPUA ===
+  - name: Papua
+    code: papua
+    jdih_url: https://jdih.papua.go.id
+    jdih_search_path: /search?q=upah+minimum+{year}
+    jdih_type: elegis
+    disnaker_url: https://nakerkopukm.papua.go.id
+    scraper_type: jdih
+    has_umk: true
+    kepgub_pattern: "100.3.3.1/KEP.{num}/{year}"
+    notes: "Province split in 2022, data applies to remaining regions"
+
+  - name: Papua Barat
+    code: papuabarat
+    jdih_url: https://jdih.papuabaratprov.go.id
+    jdih_search_path: /search?q=upah+minimum+{year}
+    jdih_type: elegis
+    disnaker_url: https://disnaker.papuabaratprov.go.id
+    scraper_type: jdih
+    has_umk: true
+    kepgub_pattern: "{num}/{year}"
+
+  - name: Papua Barat Daya
+    code: papuabaratdaya
+    jdih_url: https://jdih.papuabaratdayaprov.go.id
+    jdih_search_path: /search?q=upah+minimum+{year}
+    jdih_type: elegis
+    scraper_type: jdih
+    has_umk: true
+    notes: "New province (2022), may use Papua Barat data"
+
+  - name: Papua Tengah
+    code: paputengah
+    jdih_url: https://jdih.paputengahprov.go.id
+    jdih_search_path: /search?q=upah+minimum+{year}
+    jdih_type: elegis
+    scraper_type: jdih
+    has_umk: true
+    notes: "New province (2022), may use Papua data"
+
+  - name: Papua Pegunungan
+    code: papuapegunungan
+    jdih_url: https://jdih.papuapegununganprov.go.id
+    jdih_search_path: /search?q=upah+minimum+{year}
+    jdih_type: elegis
+    scraper_type: jdih
+    has_umk: true
+    notes: "New province (2022), may use Papua data"
+
+  - name: Papua Selatan
+    code: papuaselatan
+    jdih_url: https://jdih.papuaselatanprov.go.id
+    jdih_search_path: /search?q=upah+minimum+{year}
+    jdih_type: elegis
+    scraper_type: jdih
+    has_umk: true
+    notes: "New province (2022), may use Papua data"
+
+  # === BANTEN ===
+  - name: Banten
+    code: banten
+    jdih_url: https://jdih.bantenprov.go.id
+    jdih_search_path: /search?q=upah+minimum+{year}
+    jdih_type: elegis
+    disnaker_url: https://disnaker.bantenprov.go.id
+    ppid_url: https://ppid.bantenprov.go.id
+    direct_pdf_pattern: https://ppid.bantenprov.go.id/storage/document/kepgub-banten-upah-minimum-kabupaten-dan-kota-tahun-{next_year}
+    scraper_type: jdih
+    has_umk: true
+    kepgub_pattern: "{num}/{year}"
+
+# Search keywords for finding Kepgub documents
+search_keywords:
+  primary:
+    - "keputusan gubernur upah minimum {year}"
+    - "kepgub umk {year}"
+    - "penetapan upah minimum kabupaten {year}"
+  secondary:
+    - "umk {year}"
+    - "upah minimum kota {year}"
+    - "sk gubernur upah {year}"
+
+# Value ranges for validation
+validation:
+  min_umk: 2000000
+  max_umk: 6500000
+  min_yoy_increase: 0.02
+  max_yoy_increase: 0.15
+  min_regions_per_province: 1
+  max_regions_per_province: 45
